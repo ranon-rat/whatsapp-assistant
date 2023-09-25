@@ -11,3 +11,8 @@ ngrok http 3000 --domain=<tu dominio>
 
 ```
 3- agregarlo en la URL de devolucion de llamada que se localiza en el dashboard de la plataforma de desarrolladores de meta `productos>whatsapp>configuracion`
+
+4- Si quieres unicamente testear solamente debes de añadir tu numero a una lista de prueba.
+5- ya tengas todo eso puedes hacer funcionar todo lo demas
+
+![a](images/example.png)
