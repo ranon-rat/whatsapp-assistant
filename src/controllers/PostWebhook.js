@@ -1,6 +1,8 @@
-let {getResponse,sendAMessage}=require("./getResponse")
+const {getResponse,sendAMessage}=require("./getResponse.js"),
+  {AddConversation,GetConversations}=require("./addAndGetConversations")
 let conversations = {}
 let msgsFrom = {}
+
 // this will receive the messages
 exports.Post=async  (req, res)=> {
     // i check if the object is defined
@@ -8,6 +10,7 @@ exports.Post=async  (req, res)=> {
       res.sendStatus(404);
       return
     }
+
   
     let entry = req.body.entry
     // then i check that the things that i will need are
@@ -21,13 +24,12 @@ exports.Post=async  (req, res)=> {
     let msg = value.messages[0].text.body; //this is another thing
     // for some reason the from doesnt return me the client number so i need to do this shit
     from = from.slice(0, 2) + from.slice(3, from.length)
-  
     // check if the number exists in the history
     if (!conversations[from]) {
-      conversations[from] = [{
-        role: "system",
-        content: "eres una inteligencia aritificial util"
-      }]
+      conversations[from] =await GetConversations(from)
+
+
+      console.log(conversations)
     }
     if (!msgsFrom[from]) {
       msgsFrom[from] = []
@@ -60,13 +62,15 @@ exports.Post=async  (req, res)=> {
     msgs.push(userMsg)
     let response = await getResponse(msgs)
   
-    //this will add stuff correctly
+ 
     conversations[from] = conversations[from].concat([userMsg, {
       role: "assistant",
       content: response
     }])
     msgsFrom[from].shift()
-  
+    //this will add stuff correctly
+    await AddConversation(from,"user",msg)
+    await AddConversation(from,"assistant",response) 
     //send msg
     sendAMessage(phone_number_id, from, response)
   

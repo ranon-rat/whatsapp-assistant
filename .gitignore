@@ -1,2 +1,4 @@
 node_modules
 .env
+db/conversations.db
+ngrok.sh
