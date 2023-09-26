@@ -2,9 +2,7 @@ const {getResponse,sendAMessage}=require("./getResponse.js"),
   {AddConversation,GetConversations}=require("./addAndGetConversations")
 let conversations = {}
 let msgsFrom = {}
-function OnlyPrintRole(c){
-  c.map(i=>console.log(c.role))
-}
+
 // this will receive the messages
 exports.Post=async  (req, res)=> {
     // i check if the object is defined
@@ -29,10 +27,7 @@ exports.Post=async  (req, res)=> {
     // check if the number exists in the history
     if (!conversations[from]) {
       conversations[from] =await GetConversations(from)
-
-
     }
-
     if (!msgsFrom[from]) {
       msgsFrom[from] = []
     }
