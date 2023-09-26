@@ -2,7 +2,9 @@ const {getResponse,sendAMessage}=require("./getResponse.js"),
   {AddConversation,GetConversations}=require("./addAndGetConversations")
 let conversations = {}
 let msgsFrom = {}
-
+function OnlyPrintRole(c){
+  c.map(i=>console.log(c.role))
+}
 // this will receive the messages
 exports.Post=async  (req, res)=> {
     // i check if the object is defined
@@ -29,8 +31,8 @@ exports.Post=async  (req, res)=> {
       conversations[from] =await GetConversations(from)
 
 
-      console.log(conversations)
     }
+
     if (!msgsFrom[from]) {
       msgsFrom[from] = []
     }
@@ -69,8 +71,7 @@ exports.Post=async  (req, res)=> {
     }])
     msgsFrom[from].shift()
     //this will add stuff correctly
-    await AddConversation(from,"user",msg)
-    await AddConversation(from,"assistant",response) 
+    await AddConversation(from,msg,response)
     //send msg
     sendAMessage(phone_number_id, from, response)
   
