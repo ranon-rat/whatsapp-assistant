@@ -6,4 +6,12 @@ CREATE TABLE history(
 	PRIMARY KEY (ID)
 
 
-)
+);
+
+
+CREATE TABLE archives(
+  WhatsappID TEXT,
+  Name TEXT,
+  Company TEXT,
+  MBTI TEXT
+);

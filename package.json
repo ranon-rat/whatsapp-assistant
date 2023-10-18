@@ -1,22 +1,11 @@
 {
-  "name": "ngrok-webhook-nodejs-sample",
+  "name": "whatsappassistantflowise",
   "version": "1.0.0",
   "description": "This sample app works as a webhook listener using Node and ExpressJS.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ngrok/ngrok-webhook-nodejs-sample.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ngrok/ngrok-webhook-nodejs-sample/issues"
-  },
-  "homepage": "https://github.com/ngrok/ngrok-webhook-nodejs-sample#readme",
   "dependencies": {
     "axios": "^1.5.0",
     "body-parser": "^1.20.2",

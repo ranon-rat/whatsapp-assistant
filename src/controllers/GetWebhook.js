@@ -1,4 +1,4 @@
-exports.Get= (req, res) =>{
+exports.GetWebhook=function GetWebhook(req, res){
 
 
     let mode = req.query["hub.mode"];
