@@ -8,3 +8,6 @@ ngrok.sh
 .cache
 .replit
 replit*
+.next
+.cache.config
+.upm

@@ -1,8 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body{
     background-color:  #0f172a;
 }
 #big{
     text-align: center;
+}
+.centered{
+    margin: auto;
+    padding: 10px;
+
 }
 #search{
     margin: auto;
@@ -10,6 +19,10 @@ body{
     max-width: 80vw;
     padding: 10px;
 }
+#button-center{
+    margin: auto;
+    
+    padding: 10px;}
 #list{
     border-radius: 25px;
     border-color: rgb(75, 85, 99);
@@ -17,4 +30,7 @@ body{
     max-width: 80vw;
     padding: 10px;
 
+}
+.hidden{
+    display: none;
 }

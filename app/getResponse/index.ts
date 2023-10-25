@@ -1,14 +1,16 @@
+import {default as axios} from "axios"
+import {flowiseApi} from "@/app/types"
 
-const axios=require("axios").default
-exports.getResponse=async function getResponse(msgs) {
+
+export async function getResponse(msgs:flowiseApi):Promise<string> {
 
   let res = await axios({
-    url: process.env.FLOWISE_URL,
-    headers: {
-      Authorization: "Bearer " + process.env.FLOWISE_KEY,
+    "url": process.env.FLOWISE_URL,
+    "headers": {
+      "Authorization": "Bearer " + process.env.FLOWISE_KEY,
       "Content-Type": "application/json"
     },
-    method: "POST",
+    "method": "POST",
     "data": msgs  
     ,
   }).catch(e => e.response ? console.log(e.response.data) : null);
@@ -18,7 +20,8 @@ exports.getResponse=async function getResponse(msgs) {
   }
   return res.data
 }
-exports.sendAMessage= function sendAMessage (phone_number_id, from, response) {
+
+export function sendAMessage (phone_number_id:string, from:string, response:string) {
   axios({
     method: "POST",
     url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
