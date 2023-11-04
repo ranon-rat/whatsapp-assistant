@@ -16,12 +16,15 @@ export async function GET(req: NextRequest) {
     let token = query.get("hub.verify_token") || "";
     console.log(token)
     // this is just in case that something is wrong 
-    if (mode !== "subscribe" && token !== process.env.VERIFY_TOKEN) return res.json(
+    if (!mode && !token) return res.json(
         { message: "something is weird" }
         , { status: 403 }) // i check if they are defined
-
-
-
+    // i check if both of the requisites are fulfilled
+    if (mode !== "subscribe" && token !== process.env.VERIFY_TOKEN) {
+        return res.json(
+            { message: "something is weird" }
+            , { status: 403 })
+    }
     console.log("WEBHOOK_VERIFIED");
     return res.json(
         { message: "everything is fine" }
@@ -33,18 +36,25 @@ export async function GET(req: NextRequest) {
     
 */
 export async function POST(req: NextRequest) {
-    let body: any = await req.json()
     /**
      * this is just for checking that all requisites are fullfiled
      */
  
-    if (body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text === undefined) {
-        return res.json(
-            { message: "something is weird" }
-            , { status: 404 })
-    }
-    //------------------------------//
-    let value = body.entry[0].changes[0].value
+     let body: any = await req.json()
+     // i check if the object is defined
+     if (body?.object) {
+         return res.json(
+             { message: "something is weird" }
+             , { status: 404 })
+     }
+     let entry = body?.entry
+     if (entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text === undefined) {
+         return res.json(
+             { message: "something is weird" }
+             , { status: 404 })
+     }
+     //------------------------------//
+     let value = entry[0].changes[0].value
     //whatsapp info that i need to check
     let phone_number_id: string = value.metadata.phone_number_id;// this is the id of the bot
     let from: string = value.messages[0].from;// whatsapp id faggoty shit
