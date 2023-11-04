@@ -2,16 +2,20 @@ import {default as axios} from "axios"
 import {flowiseApi} from "@/app/types"
 
 
-export async function getResponse(msgs:flowiseApi):Promise<string> {
 
+export async function getResponse(msgs: flowiseApi, kind: string = "TOOL"): Promise<string> {
+  let url = process.env.FLOWISE_URL_TOOL
+  if (kind == "WILLIAM") {
+    url = process.env.FLOWISE_URL_WILLIAM
+  }
   let res = await axios({
-    "url": process.env.FLOWISE_URL,
+    "url": url,
     "headers": {
       "Authorization": "Bearer " + process.env.FLOWISE_KEY,
       "Content-Type": "application/json"
     },
     "method": "POST",
-    "data": msgs  
+    "data": msgs
     ,
   }).catch(e => e.response ? console.log(e.response.data) : null);
 
