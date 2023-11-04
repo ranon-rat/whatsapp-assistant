@@ -39,7 +39,7 @@ export async function checkExistence(whatsappID: string): Promise<boolean> {
     const db = await connectToDB()
     const rows = await db.query("SELECT count(*) FROM archives where WhatsappID=$1", [whatsappID]).then(res => res.rows)
     await db.end()
-    return Object.values(rows[0])[0]! > 0
+    return Object.values(rows[0])[0] as number > 0
 }
 export async function AddOrUpdateArchive(archive: archiveProfile) {
     const db = await connectToDB(),
