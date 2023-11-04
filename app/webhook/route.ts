@@ -22,7 +22,9 @@ export async function GET(req: NextRequest) {
     if (!mode && !token) return  // i check if they are defined
     // i check if both of the requisites are fulfilled
     if (mode !== "subscribe" && token !== process.env.VERIFY_TOKEN) {
-        return res.error()
+        return res.json("fucking error",{
+            status:403
+        })
         
     }
     console.log("WEBHOOK_VERIFIED");
