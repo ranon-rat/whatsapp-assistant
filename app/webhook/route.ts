@@ -14,6 +14,8 @@ export async function GET(req: NextRequest) {
     const query = req.nextUrl.searchParams
     let mode = query.get("hub.mode") || "";
     let token = query.get("hub.verify_token") || "";
+    let challenge = query.get("hub.challenge")||"";
+
     console.log(token)
     // this is just in case that something is wrong 
     if (!mode && !token) return res.json(
@@ -26,8 +28,9 @@ export async function GET(req: NextRequest) {
             , { status: 403 })
     }
     console.log("WEBHOOK_VERIFIED");
-    return res.json(
-        { message: "everything is fine" }
+    
+
+    return res.json(challenge
         , { status: 200 })
 }
 /*
