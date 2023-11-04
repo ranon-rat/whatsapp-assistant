@@ -6,7 +6,7 @@ import { AddConversation, GetConversations } from "@/app/database"
 ////
 let conversations = new Map<string, messagesFlowise[]>()
 let msgsFrom = new Map<string, string[]>()
-export async function handler(req: NextApiRequest,res:NextApiResponse) {
+export default async function handler(req: NextApiRequest,res:NextApiResponse) {
    switch( req.method){
     case "GET":
         GET(req,res);
