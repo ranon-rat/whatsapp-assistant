@@ -17,10 +17,10 @@ export type messagesFlowise={
     message:string
 }
 export type archiveProfile={
-    WhatsappID:string
-    Name:string
-    Company:string
-    MBTI:string
+    whatsappid:string
+    name:string
+    company:string
+    mbti:string
     
 }
 export type Params={
