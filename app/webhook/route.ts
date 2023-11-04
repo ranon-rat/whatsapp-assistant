@@ -1,45 +1,33 @@
-import type { NextApiRequest, NextApiResponse } from 'next'//
 import { messagesFlowise, limitConversation } from "@/app/types"
 //
 import { getResponse, sendAMessage } from "@/app/getResponse"
 import { AddConversation, GetConversations } from "@/app/database"
+import { NextRequest,NextResponse as res } from "next/server"
+import next from "next"
 ////
 let conversations = new Map<string, messagesFlowise[]>()
 let msgsFrom = new Map<string, string[]>()
-export default async function handler(req: NextApiRequest,res:NextApiResponse) {
-   switch( req.method){
-    case "GET":
-        GET(req,res);
-        break;
-    case "POST":
-        POST(req,res);
-        break;
-    default:
-        break;
-   }
-}
 
 
 // this is just for making a setup for everything
-async function GET(req: NextApiRequest,res:NextApiResponse) {
+export async function GET(req: NextRequest) {
 
     // some params that you need to take into consideration
-
-    let mode = req.query["hub.mode"] || "";
-    let token = req.query["hub.verify_token"] || "";
-    let challenge = req.query["hub.challenge"]||"";
-
+    const query = req.nextUrl.searchParams
+    let mode = query.get("hub.mode")||"";
+    let token = query.get("hub.verify_token")||"";
+     let challenge = query.get("hub.challenge");
     console.log(token)
     // this is just in case that something is wrong 
     if (!mode && !token) return  // i check if they are defined
     // i check if both of the requisites are fulfilled
     if (mode !== "subscribe" && token !== process.env.VERIFY_TOKEN) {
-        res.status(403).send("wtf")
+        return res.error()
         
     }
     console.log("WEBHOOK_VERIFIED");
     
-res.status(200).send(challenge)
+    return new Response(challenge)
 
 }
 /*
@@ -47,19 +35,20 @@ res.status(200).send(challenge)
     
     
 */
- async function POST(req: NextApiRequest,res:NextApiResponse) {
-    /**
-     * this is just for checking that all requisites are fullfiled
-     */
- 
-     let body: any = req.body
-    
-     let entry = body?.entry
-     if (entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text === undefined) {
-        res.status(403).send("something is wrong wtf")
-    return 
+ export async function POST(req: NextRequest) {
+    let body: any = await req.json()
+    // i check if the object is defined
+    if (body?.object) {
+        return res.json(
+            { message: "something is weird" }
+            , { status: 404 })
     }
-    res.status(200).send("everything is fine")
+    let entry = body?.entry
+    if (entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text === undefined) {
+        return res.json(
+            { message: "something is weird" }
+            , { status: 404 })
+    }
      //------------------------------//
      let value = entry[0].changes[0].value
     //whatsapp info that i need to check
@@ -142,4 +131,7 @@ res.status(200).send(challenge)
                 )
             )
     }
+    return res.json(
+        { message: "everything is fine" }
+        , { status: 200 })
 }
