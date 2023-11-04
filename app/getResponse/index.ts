@@ -5,9 +5,16 @@ import {flowiseApi} from "@/app/types"
 
 export async function getResponse(msgs: flowiseApi, kind: string = "TOOL"): Promise<string> {
   let url = process.env.FLOWISE_URL_TOOL
+/*
+ The reason this exists is just for making everything work.
+ With this you can send a message to the chatflow with function calling
+ And also you can do it to the chatflow with your fine tuned model.
+
+*/
   if (kind == "WILLIAM") {
     url = process.env.FLOWISE_URL_WILLIAM
   }
+  // this just get the response from your flowise host
   let res = await axios({
     "url": url,
     "headers": {
@@ -24,7 +31,7 @@ export async function getResponse(msgs: flowiseApi, kind: string = "TOOL"): Prom
   }
   return res.data
 }
-
+// this send a message to an specific number(from) it can use both (phone number and whatsapp id)
 export function sendAMessage (phone_number_id:string, from:string, response:string) {
   axios({
     method: "POST",

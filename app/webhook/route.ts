@@ -7,44 +7,44 @@ import { AddConversation, GetConversations } from "@/app/database"
 ////
 let conversations = new Map<string, messagesFlowise[]>()
 let msgsFrom = new Map<string, string[]>()
+// this is just for making a setup for everything
 export async function GET(req: NextRequest) {
+
+    // some params that you need to take into consideration
     const query = req.nextUrl.searchParams
-    console.log(query)
-    let mode = query.get("hub.mode")||"";
-    let token = query.get("hub.verify_token")||"";
+    let mode = query.get("hub.mode") || "";
+    let token = query.get("hub.verify_token") || "";
     console.log(token)
-    //  let challenge = query.get("hub.challenge");
-    if (!mode && !token) return res.json(
+    // this is just in case that something is wrong 
+    if (mode !== "subscribe" && token !== process.env.VERIFY_TOKEN) return res.json(
         { message: "something is weird" }
         , { status: 403 }) // i check if they are defined
-    // i check if both of the requisites are fulfilled
-    if (mode !== "subscribe" && token !== process.env.VERIFY_TOKEN) {
-        return res.json(
-            { message: "something is weird" }
-            , { status: 403 })
-    }
-    // in the case that everything is fine then i will return that is completely okay
+
+
+
     console.log("WEBHOOK_VERIFIED");
     return res.json(
         { message: "everything is fine" }
         , { status: 200 })
 }
+/*
+    this recieves messages from the facebook servers.
+    
+    
+*/
 export async function POST(req: NextRequest) {
     let body: any = await req.json()
-    // i check if the object is defined
-    if (body?.object) {
-        return res.json(
-            { message: "something is weird" }
-            , { status: 404 })
-    }
-    let entry = body?.entry
-    if (entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text === undefined) {
+    /**
+     * this is just for checking that all requisites are fullfiled
+     */
+ 
+    if (body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text === undefined) {
         return res.json(
             { message: "something is weird" }
             , { status: 404 })
     }
     //------------------------------//
-    let value = entry[0].changes[0].value
+    let value = body.entry[0].changes[0].value
     //whatsapp info that i need to check
     let phone_number_id: string = value.metadata.phone_number_id;// this is the id of the bot
     let from: string = value.messages[0].from;// whatsapp id faggoty shit
@@ -84,21 +84,21 @@ export async function POST(req: NextRequest) {
     // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
     getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
-    
-        "history":conversations.get(from)!,
-    
+
+        "history": conversations.get(from)!,
+
         "overrideConfig": {
-          "returnSourceDocuments": true
+            "returnSourceDocuments": true
         }
-      }, "TOOL")
+    }, "TOOL")
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse({
-        "question":  msg,
+        "question": msg,
         "history": conversations.get(from)!,
         "overrideConfig": {
             "returnSourceDocuments": true
         }
-    },"WILLIAM")
+    }, "WILLIAM")
 
     //--------------------------------------
     //things that will keep this working
@@ -110,13 +110,20 @@ export async function POST(req: NextRequest) {
         type: "apiMessage",
         message: response
     }]))//we need context
+    /**
+     * after we get everything we just need to have all of this
+     */
     msgsFrom.get(from)!.shift()//we need to mantain the order
     await AddConversation(from, msg, response)//and we need to save this to the db
     sendAMessage(phone_number_id, from, response)  //send msg
     if (conversations.get.length > limitConversation) {// this will avoid overflowing the api
-
-        conversations.set(from, conversations.get(from)!.slice(conversations.get(from)!.length - limitConversation))
-
+        conversations
+        .set(from, 
+            conversations.get(from)!
+            .slice(
+                conversations.get(from)!.length - limitConversation
+                )
+            )
     }
     return res.json(
         { message: "everything is fine" }
