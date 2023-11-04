@@ -6,8 +6,22 @@ import { AddConversation, GetConversations } from "@/app/database"
 ////
 let conversations = new Map<string, messagesFlowise[]>()
 let msgsFrom = new Map<string, string[]>()
+export async function handler(req: NextApiRequest,res:NextApiResponse) {
+   switch( req.method){
+    case "GET":
+        GET(req,res);
+        break;
+    case "POST":
+        POST(req,res);
+        break;
+    default:
+        break;
+   }
+}
+
+
 // this is just for making a setup for everything
-export async function GET(req: NextApiRequest,res:NextApiResponse) {
+async function GET(req: NextApiRequest,res:NextApiResponse) {
 
     // some params that you need to take into consideration
 
@@ -33,7 +47,7 @@ res.status(200).send(challenge)
     
     
 */
-export async function POST(req: NextApiRequest,res:NextApiResponse) {
+ async function POST(req: NextApiRequest,res:NextApiResponse) {
     /**
      * this is just for checking that all requisites are fullfiled
      */
