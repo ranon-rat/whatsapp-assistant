@@ -79,14 +79,14 @@ function row(v: archiveProfile, index: number) {
                     {v.whatsappid}</td>
                 <td
                     className="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                    {v.name}</td>
+                    {v.name||"-"}</td>
                 <td
                     className="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                    {v.company}</td>
+                    {v.company||"-"}</td>
 
                 <td
                     className="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                    {v.mbti}</td>
+                    {v.mbti||"-"}</td>
 
             </tr>
         </Fragment>

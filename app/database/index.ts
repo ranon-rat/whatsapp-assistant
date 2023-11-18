@@ -58,7 +58,7 @@ export async function AddOrUpdateArchive(archive: archiveProfile) {
     { value: company, name: "company" },
     { value: mbti, name: "mbti" }]
     for (let v of query) {
-        if (!v.value || ["", "unknown", "desconocido"].includes(v.value)) {
+        if (!v.value || ["", "unknown", "desconocido"].includes(v.value.toLowerCase())) {
             continue
         }
         await db.query(`UPDATE archives 

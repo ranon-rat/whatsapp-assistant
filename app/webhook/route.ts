@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
 
 }
 /*
-    this recieves messages from the facebook servers.
+    this recieves messages from the meta servers.
     
     
 */
@@ -61,10 +61,11 @@ export async function POST(req: NextRequest) {
 
     if (process.env.DEV == "DEV") from = from.slice(0, 2) + from.slice(3, from.length) // this get me the client number
     // check if the number exists in the conversation history
-    if (!conversations.get("from")) {
+    if (!conversations.get(from)) {
         conversations.set(from, await GetConversations(from))
 
     }
+    console.log(conversations.get(from))
     // this will mantain a certain order in the conversation
     if (!msgsFrom.get(from)) {
         msgsFrom.set(from, [])
