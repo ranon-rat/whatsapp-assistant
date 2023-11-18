@@ -28,8 +28,8 @@ export async function GetConversations(from: string): Promise<messagesFlowise[]>
 
 
 export async function checkExistence(whatsappID: string): Promise<boolean> {
-    const rows = await db.query("SELECT count(*) FROM archives where WhatsappID=$1", [whatsappID]).then(res => res.rows)
-    return Object.values(rows[0])[0] as number > 0
+    const count = await db.query("SELECT count(*) FROM archives where WhatsappID=$1", [whatsappID]).then(res => res.rows[0].count)
+    return count as number > 0
 }
 export async function AddOrUpdateArchive(archive: archiveProfile) {
 const        whatsappID = archive.whatsappid,
