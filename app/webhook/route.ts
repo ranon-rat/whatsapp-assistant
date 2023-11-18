@@ -128,7 +128,7 @@ export async function POST(req: NextRequest) {
    await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
 
-        "information": [],
+        "information": conversations.get(from)!,
 
         "overrideConfig": {
             "returnSourceDocuments": true
