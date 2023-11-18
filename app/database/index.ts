@@ -1,5 +1,5 @@
 import { messageApi, messagesFlowise, archiveProfile, limitConversation } from "../types"
-import { Client } from "pg"
+import { Client} from "pg"
 
 const connectionString = process.env.URI 
 
@@ -49,6 +49,13 @@ export async function AddOrUpdateArchive(archive: archiveProfile) {
     if (!await checkExistence(whatsappID)) {
         db.query("INSERT INTO archives(whatsappID) VALUES($1)", [whatsappID])
     }
+
+    console.log("------------------------------")
+    console.log("whatsapp id:", whatsappID)
+    console.log("name:", name)
+    console.log("company:", company)
+    console.log("mbti:",mbti)
+    console.log("------------------------------")
    let query=[{ value: name, name: "name" },
     { value: company, name: "company" },
     { value: mbti, name: "mbti" }]
