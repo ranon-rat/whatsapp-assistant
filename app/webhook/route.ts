@@ -39,16 +39,17 @@ export async function GET(req: NextRequest) {
  export async function POST(req: NextRequest) {
     let body: any = await req.json()
     // i check if the object is defined
-    if (body?.object) {
+    if (!body?.object) {
         return res.json(
             { message: "something is weird" }
-            , { status: 404 })
+            , { status: 400 })
     }
+
     let entry = body?.entry
     if (entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text === undefined) {
         return res.json(
             { message: "something is weird" }
-            , { status: 404 })
+            , { status: 400 })
     }
      //------------------------------//
      let value = entry[0].changes[0].value

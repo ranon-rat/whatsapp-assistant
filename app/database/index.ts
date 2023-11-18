@@ -14,6 +14,15 @@ async function connectToDB(): Promise<Client>{
 
 export async function AddConversation(from: string, message: string, response: string) {
     const db =await  connectToDB()
+
+
+
+
+
+
+
+
+
     const querycmd = `INSERT INTO history(fromNumber,message,response) VALUES ($1,$2,$3)`
     
     db.query(querycmd, [from, message, response])
@@ -21,7 +30,7 @@ export async function AddConversation(from: string, message: string, response: s
 }
 export async function GetConversations(from: string): Promise<messagesFlowise[]> {
 
-    const querycmd = "SELECT message ,response FROM history WHERE FromNumber=$1 ORDER BY ID ASC LIMIT=$2"
+    const querycmd = "SELECT (message ,response) FROM history WHERE FromNumber=$1 ORDER BY ID ASC LIMIT $2"
     const db = await connectToDB()
     let rows = await db.query(querycmd,[from,limitConversation]).then(result => result.rows) as messageApi[]
 
