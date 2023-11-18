@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
             )
     }
     // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
-    getResponse({
+   await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
 
         "information": [],
