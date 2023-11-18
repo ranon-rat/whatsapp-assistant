@@ -101,7 +101,6 @@ export async function POST(req: NextRequest) {
 
     //--------------------------------------
     //things that will keep this working
-
     conversations.set(from, conversations.get(from)!.concat([{
         type: "userMessage",
         message: msg
