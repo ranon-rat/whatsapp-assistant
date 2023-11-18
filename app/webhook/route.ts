@@ -3,7 +3,6 @@ import { messagesFlowise, limitConversation } from "@/app/types"
 import { getResponse, sendAMessage } from "@/app/getResponse"
 import { AddConversation, GetConversations } from "@/app/database"
 import { NextRequest,NextResponse as res } from "next/server"
-import next from "next"
 ////
 let conversations = new Map<string, messagesFlowise[]>()
 let msgsFrom = new Map<string, string[]>()
