@@ -14,18 +14,8 @@ async function connectToDB(): Promise<Client>{
 
 export async function AddConversation(from: string, message: string, response: string) {
     const db =await  connectToDB()
-
-
-
-
-
-
-
-
-
     const querycmd = `INSERT INTO history(fromNumber,message,response) VALUES ($1,$2,$3)`
-    
-    db.query(querycmd, [from, message, response])
+   await  db.query(querycmd, [from, message, response])
     await db.end()
 }
 export async function GetConversations(from: string): Promise<messagesFlowise[]> {
@@ -33,13 +23,13 @@ export async function GetConversations(from: string): Promise<messagesFlowise[]>
     const querycmd = "SELECT (message ,response) FROM history WHERE FromNumber=$1 ORDER BY ID ASC LIMIT $2"
     const db = await connectToDB()
     let rows = await db.query(querycmd,[from,limitConversation]).then(result => result.rows) as messageApi[]
-
+let v=(rows.length > 0 ? rows.map(
+    (r: messageApi): messagesFlowise[] => [
+        { type: "userMessage", message: r.message || "error" },
+        { type: "apiMessage", message: r.response || "error" }
+    ]).flat() : []) as messagesFlowise[]
     await db.end()
-    return (rows.length > 0 ? rows.map(
-        (r: messageApi): messagesFlowise[] => [
-            { type: "userMessage", message: r.message || "error" },
-            { type: "apiMessage", message: r.response || "error" }
-        ]).flat() : []) as messagesFlowise[]
+    return v
 }
 
 

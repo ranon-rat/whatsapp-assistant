@@ -3,12 +3,10 @@ DROP TABLE archives;
 
 
 CREATE TABLE history(
-    ID INTEGER PRIMARY KEY,
+    ID SERIAL PRIMARY KEY NOT NULL,
     fromNumber VARCHAR(15),
     message TEXT,
     response TEXT
-
-
 );
 
 

@@ -4,7 +4,7 @@ import {flowiseApi} from "../types"
 
 
 export async function getResponse(msgs: flowiseApi, kind: string = "TOOL"): Promise<string> {
-  let url = process.env.FLOWISE_URL_TOOL
+  let url = process.env.FLOWISE_TOOL
 /*
  The reason this exists is just for making everything work.
  With this you can send a message to the chatflow with function calling
@@ -12,7 +12,7 @@ export async function getResponse(msgs: flowiseApi, kind: string = "TOOL"): Prom
 
 */
   if (kind == "WILLIAM") {
-    url = process.env.FLOWISE_URL_WILLIAM
+    url = process.env.FLOWISE_WILLIAM
   }
   // this just get the response from your flowise host
   let res = await axios({
@@ -24,7 +24,7 @@ export async function getResponse(msgs: flowiseApi, kind: string = "TOOL"): Prom
     "method": "POST",
     "data": msgs
     ,
-  }).catch(e => e.response ? console.log(e.response.data) : null);
+  }).catch(e => e.response?console.log(e.response.data):null);
 //&&
   if (!res) {
     return "error interno"

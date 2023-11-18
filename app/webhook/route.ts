@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
     getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
 
-        "history": conversations.get(from)!,
+        "information": [],
 
         "overrideConfig": {
             "returnSourceDocuments": true
@@ -102,7 +102,7 @@ export async function GET(req: NextRequest) {
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse({
         "question": msg,
-        "history": conversations.get(from)!,
+        "information": conversations.get(from)!,
         "overrideConfig": {
             "returnSourceDocuments": true
         }
