@@ -94,7 +94,7 @@ function row(v: archiveProfile, index: number) {
 }
 export async function table(query: string) {
     const rows = (await GetArchives(query)).map(row)
-    if (rows.length == 0 && query !== "") {
+    if (rows.length == 0) {
         return <div id="nothing-found">
             <div className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
                 <p className="font-bold">404 Nothing was found</p>
@@ -102,14 +102,7 @@ export async function table(query: string) {
             </div>
         </div>
     }
-    if (rows.length == 0) {
-        return <div id="nothing-found">
-            <br />
-            <h1 className="text-white">
-                Empty database
-            </h1>
-        </div>
-    }
+
     return <div id="list">
         <div className="relative rounded-xl overflow-auto">
             <div className="shadow-sm overflow-hidden my-8">
