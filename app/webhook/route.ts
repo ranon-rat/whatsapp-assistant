@@ -2,7 +2,7 @@ import { messagesFlowise, limitConversation } from "../types"
 //
 import { getResponse, sendAMessage } from "../getResponse"
 import { AddConversation, GetConversations } from "../database"
-import { NextRequest,NextResponse as res } from "next/server"
+import { NextRequest, NextResponse as res } from "next/server"
 ////
 let conversations = new Map<string, messagesFlowise[]>()
 let msgsFrom = new Map<string, string[]>()
@@ -13,21 +13,21 @@ export async function GET(req: NextRequest) {
 
     // some params that you need to take into consideration
     const query = req.nextUrl.searchParams
-    let mode = query.get("hub.mode")||"";
-    let token = query.get("hub.verify_token")||"";
-     let challenge = query.get("hub.challenge");
+    let mode = query.get("hub.mode") || "";
+    let token = query.get("hub.verify_token") || "";
+    let challenge = query.get("hub.challenge");
     console.log(token)
     // this is just in case that something is wrong 
     if (!mode && !token) return  // i check if they are defined
     // i check if both of the requisites are fulfilled
     if (mode !== "subscribe" && token !== process.env.VERIFY_TOKEN) {
-        return res.json("fucking error",{
-            status:403
+        return res.json("fucking error", {
+            status: 403
         })
-        
+
     }
     console.log("WEBHOOK_VERIFIED");
-    
+
     return new Response(challenge)
 
 }
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
     
     
 */
- export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
     let body: any = await req.json()
     // i check if the object is defined
     if (!body?.object) {
@@ -51,8 +51,8 @@ export async function GET(req: NextRequest) {
             { message: "something is weird" }
             , { status: 400 })
     }
-     //------------------------------//
-     let value = entry[0].changes[0].value
+    //------------------------------//
+    let value = entry[0].changes[0].value
     //whatsapp info that i need to check
     let phone_number_id: string = value.metadata.phone_number_id;// this is the id of the bot
     let from: string = value.messages[0].from;// whatsapp id faggoty shit
@@ -117,23 +117,23 @@ export async function GET(req: NextRequest) {
     sendAMessage(phone_number_id, from, response)  //send msg
     if (conversations.get.length > limitConversation) {// this will avoid overflowing the api
         conversations
-        .set(from, 
-            conversations.get(from)!
-            .slice(
-                conversations.get(from)!.length - limitConversation
-                )
+            .set(from,
+                conversations.get(from)!
+                    .slice(
+                        conversations.get(from)!.length - limitConversation
+                    )
             )
     }
-        // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
-        getResponse({
-            "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
-    
-            "information": [],
-    
-            "overrideConfig": {
-                "returnSourceDocuments": true
-            }
-        }, "TOOL")
+    // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
+    getResponse({
+        "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
+
+        "information": [],
+
+        "overrideConfig": {
+            "returnSourceDocuments": true
+        }
+    }, "TOOL")
     return res.json(
         { message: "everything is fine" }
         , { status: 200 })
