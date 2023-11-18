@@ -1,10 +1,10 @@
 import { messageApi, messagesFlowise, archiveProfile, limitConversation } from "../types"
-import { Client} from "pg"
+import { Pool} from "pg"
 
 const connectionString = process.env.URI 
 
-async function connectToDB(): Promise<Client>{
-    const client = new Client({
+async function connectToDB(): Promise<Pool>{
+    const client = new Pool({
         connectionString,
         ssl:true
     })
