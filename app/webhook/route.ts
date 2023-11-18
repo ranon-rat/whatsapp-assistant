@@ -89,16 +89,7 @@ export async function GET(req: NextRequest) {
         resolve()
     })
     //--------------------------------------
-    // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
-    getResponse({
-        "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
 
-        "information": [],
-
-        "overrideConfig": {
-            "returnSourceDocuments": true
-        }
-    }, "TOOL")
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse({
         "question": msg,
@@ -133,6 +124,16 @@ export async function GET(req: NextRequest) {
                 )
             )
     }
+        // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
+        getResponse({
+            "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
+    
+            "information": [],
+    
+            "overrideConfig": {
+                "returnSourceDocuments": true
+            }
+        }, "TOOL")
     return res.json(
         { message: "everything is fine" }
         , { status: 200 })
