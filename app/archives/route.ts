@@ -9,9 +9,9 @@ export async function POST(req:NextRequest){
             { message: "something is weird" }
             , { status: 404 })
     }
-    let body= await req.json()
+    let body= await req.json()as archiveProfile
     console.log(body)
-    AddOrUpdateArchive(body as archiveProfile)
+   await  AddOrUpdateArchive(body )
     return res.json(
         { message:"everything is fine" }
         , { status: 202 })
