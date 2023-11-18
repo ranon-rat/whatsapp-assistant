@@ -49,25 +49,27 @@ export async function AddOrUpdateArchive(archive: archiveProfile) {
     if (!await checkExistence(whatsappID)) {
         db.query("INSERT INTO archives(whatsappID) VALUES($1)", [whatsappID])
     }
-    [{ value: name, name: "name" },
+   let query=[{ value: name, name: "name" },
     { value: company, name: "company" },
-    { value: mbti, name: "MBTI" }].map(v => {
-        v.value && !["", "unknown", "desconocido", "anon"].includes(v.value)
-            ? db.query(`UPDATE archives 
-            set ${v.name}==$1 
-            where whatsappID=$2`, [v.value, whatsappID]) :
-            null
-    })
+    { value: mbti, name: "mbti" }]
+    for(let v of query){
+        if(!v.value||["", "unknown", "desconocido"].includes(v.value)){
+            continue
+        }
+        await db.query(`UPDATE archives 
+        set ${v.name}=$1 
+        where whatsappID=$2`, [v.value, whatsappID]).catch(e=>console.log(e))
+    }
+
     await db.end()
 }
 export async function GetArchives(query: string): Promise<archiveProfile[]> {
     const db =await  connectToDB();
-    console.log("using getArchives")
     let rows: archiveProfile[] = (await db.query(`SELECT * FROM archives
         WHERE name LIKE $1 
           OR company LIKE $1 
           OR mbti LIKE $1
-          OR whatsappid LIKE $1`, [query||""])).rows
+          OR whatsappid LIKE $1`, [`%${query||""}%`])).rows
     await db.end()
     return rows
 }
