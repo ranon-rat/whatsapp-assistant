@@ -1,5 +1,5 @@
-import { GetArchives } from "@/app/database"
-import { archiveProfile } from "@/app/types"
+import { GetArchives } from "../database"
+import { archiveProfile } from "../types"
 import { Fragment } from "react"
 export function login() {
     return <div id="login" className="centered">

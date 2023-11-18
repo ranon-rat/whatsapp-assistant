@@ -1,5 +1,5 @@
 import {default as axios} from "axios"
-import {flowiseApi} from "@/app/types"
+import {flowiseApi} from "../types"
 
 
 

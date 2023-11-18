@@ -1,4 +1,4 @@
-import { messageApi, messagesFlowise, archiveProfile, limitConversation } from "@/app/types"
+import { messageApi, messagesFlowise, archiveProfile, limitConversation } from "../types"
 import { Client } from "pg"
 
 const connectionString = process.env.URI 

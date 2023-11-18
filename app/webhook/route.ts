@@ -1,7 +1,7 @@
-import { messagesFlowise, limitConversation } from "@/app/types"
+import { messagesFlowise, limitConversation } from "../types"
 //
-import { getResponse, sendAMessage } from "@/app/getResponse"
-import { AddConversation, GetConversations } from "@/app/database"
+import { getResponse, sendAMessage } from "../getResponse"
+import { AddConversation, GetConversations } from "../database"
 import { NextRequest,NextResponse as res } from "next/server"
 ////
 let conversations = new Map<string, messagesFlowise[]>()

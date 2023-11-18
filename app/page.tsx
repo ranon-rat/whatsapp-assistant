@@ -1,5 +1,5 @@
-import { search, login, table } from "@/app/parts"
-import { Params } from "@/app/types"
+import { search, login, table } from "./parts"
+import { Params } from "./types"
 
 
 export default function Home(req: Params) {

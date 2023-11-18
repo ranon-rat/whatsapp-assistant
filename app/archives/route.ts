@@ -1,6 +1,6 @@
 import { NextResponse as res, NextRequest } from "next/server"
-import { AddOrUpdateArchive } from "@/app/database"
-import {archiveProfile} from "@/app/types"
+import { AddOrUpdateArchive } from "../database"
+import {archiveProfile} from "../types"
 export async function POST(req:NextRequest){
     const query = req.nextUrl.searchParams
 
