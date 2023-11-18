@@ -58,7 +58,7 @@ export async function AddOrUpdateArchive(archive: archiveProfile) {
         }
         await db.query(`UPDATE archives 
         set ${v.name}=$1 
-        where whatsappID=$2`, [v.value, whatsappID]).catch(e=>console.log(e))
+        where whatsappID=$2`, [v.value, whatsappID])
     }
 
     await db.end()
