@@ -7,7 +7,7 @@ export type messageApi={
 
 export type flowiseApi={
     question:string
-    information:messagesFlowise[]
+    history:messagesFlowise[]
     overrideConfig:{
         returnSourceDocuments:boolean
     }

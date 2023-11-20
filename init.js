@@ -13,11 +13,11 @@
   )
 */
 require('dotenv').config();
-const { Pool } = require("pg")
+const { Client } = require("pg")
 const fs = require('fs');
 const connectionString = process.env.URI
 
-  const client = new Pool({
+  const client = new Client({
     connectionString,
     ssl: true
   })
@@ -27,8 +27,8 @@ async function main() {
   fs.readFile("./db/init.sql", 'utf-8', async (_, c) => {
 
     await client.query(c)
-    await client.end()
-
+await client.end()
   })
+  
 }
 main();

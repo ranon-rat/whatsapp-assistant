@@ -65,7 +65,8 @@ export async function POST(req: NextRequest) {
         conversations.set(from, await GetConversations(from))
 
     }
-    console.log(conversations.get(from))
+
+    console.log(conversations.get(from)!,from)
     // this will mantain a certain order in the conversation
     if (!msgsFrom.has(from)) {
         msgsFrom.set(from, [])
@@ -94,7 +95,7 @@ export async function POST(req: NextRequest) {
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse({
         "question": msg,
-        "information": conversations.get(from)!,
+        "history": conversations.get(from)!,
         "overrideConfig": {
             "returnSourceDocuments": true
         }
@@ -128,7 +129,7 @@ export async function POST(req: NextRequest) {
    await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
 
-        "information": conversations.get(from)!,
+        "history": conversations.get(from)!,
 
         "overrideConfig": {
             "returnSourceDocuments": true
