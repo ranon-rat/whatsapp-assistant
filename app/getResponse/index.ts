@@ -24,10 +24,13 @@ export async function getResponse(msgs: flowiseApi, kind: string = "TOOL"): Prom
     "method": "POST",
     "data": msgs
     ,
-  }).then(r=>r.data!.text).catch(e => e.response?console.log(e.response.data):null);
+  }).then(r=>r.data).catch(e => e.response?console.log(e.response.data):null);
 //&&
   if (!res) {
     return "error interno"
+  }
+  if(res.text){
+    return res.text
   }
   return res
 }
