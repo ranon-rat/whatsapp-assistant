@@ -25,7 +25,7 @@ export async function getResponse(msgs: flowiseApi, kind: string = "TOOL"): Prom
     "data": msgs
     ,
   }).then(r=>r.data).catch(e => e.response?console.log(e.response.data):null);
-
+//
   //&&
   if (!res) {
     return "error interno"
