@@ -1,5 +1,3 @@
-DROP TABLE history;
-DROP TABLE archives;
 
 
 CREATE TABLE history(
