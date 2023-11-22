@@ -25,8 +25,9 @@ export async function GetConversations(from: string): Promise<messagesFlowise[]>
     await db.end()
     return (rows.length > 0 ? rows.map(
         (r: messageApi): messagesFlowise[] => [
+            { type: "apiMessage", message: r.response  },
             { type: "userMessage", message: r.message  },
-            { type: "apiMessage", message: r.response  }
+
         ]).flat() : []).reverse() as messagesFlowise[]
 }
 

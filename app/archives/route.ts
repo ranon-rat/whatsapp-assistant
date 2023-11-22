@@ -11,7 +11,8 @@ export async function POST(req:NextRequest){
     }
     let body= await req.json()as archiveProfile
    await  AddOrUpdateArchive(body )
-    return res.json(
+
+   return res.json(
         { message:"everything is fine" }
         , { status: 202 })
 }
