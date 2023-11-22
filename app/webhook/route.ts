@@ -66,19 +66,18 @@ export async function POST(req: NextRequest) {
 
     }
 
-    console.log(conversations.get(from)!,from)
     // this will mantain a certain order in the conversation
     if (!msgsFrom.has(from)) {
         msgsFrom.set(from, [])
     }
     msgsFrom.get(from)!.push(msg)
     // if you want to have some logs
-    console.log("------------------------------")
+    console.log("----------Message-------------")
     console.log("content:", msg)
     console.log("whatsapp id:", value.messages[0].from)
     console.log("from:", from)
     console.log("processing:", msgsFrom.get(from)!.length)
-    console.log("------------------------------")
+    console.log("----------Message-------------")
 
     // this little promise is just checking that is our turn to send a message
     await new Promise<void>((resolve) => {
@@ -124,7 +123,7 @@ export async function POST(req: NextRequest) {
             )
     }
     // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
-  console.log( await getResponse({
+  ( await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
         "history": conversations.get(from)!,
     }, "TOOL"))

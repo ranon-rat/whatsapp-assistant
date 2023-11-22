@@ -48,17 +48,23 @@ export async function AddOrUpdateArchive(archive: archiveProfile) {
         await db.query("INSERT INTO archives(whatsappID) VALUES($1)", [whatsappID])
     }
 
-    console.log("------------------------------")
+    console.log("------------TOOL--------------")
     console.log("whatsapp id:", whatsappID)
     console.log("name:", name)
     console.log("company:", company)
     console.log("mbti:", mbti)
-    console.log("------------------------------")
+    console.log("------------TOOL--------------")
     let query = [{ value: name, name: "name" },
     { value: company, name: "company" },
     { value: mbti, name: "mbti" }]
     for (let v of query) {
-        if (!v.value || ["", "unknown", "desconocido","anonymous","anonimo","anonymous"].includes(v.value.toLowerCase())) {
+        if (!v.value || ["",
+         "unknown",
+          "desconocido",
+          "anonymous",
+          "anon",
+          "anonimo",
+          "anonymous"].includes(v.value.toLowerCase())) {
             continue
         }
         await db.query(`UPDATE archives 

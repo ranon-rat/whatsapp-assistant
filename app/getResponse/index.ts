@@ -13,7 +13,6 @@ export async function getResponse(msgs: flowiseApi, kind:string="WILLIAM"): Prom
 */
   if (kind == "TOOL") {
     url = process.env.FLOWISE_TOOL
-    console.log("IM THE TOOL",url)
   }
   // this just get the response from your flowise host
   let res = await axios({

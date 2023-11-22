@@ -10,7 +10,6 @@ export async function POST(req:NextRequest){
             , { status: 404 })
     }
     let body= await req.json()as archiveProfile
-    console.log(body)
    await  AddOrUpdateArchive(body )
     return res.json(
         { message:"everything is fine" }
