@@ -2,13 +2,13 @@ export const limitConversation = 10
 
 export type messageApi={
     message:string
-    response:string
+    response:string 
 }
 
 export type flowiseApi={
     question:string
     history:messagesFlowise[]
-    overrideConfig:{
+    overrideConfig?:{
         returnSourceDocuments:boolean
     }
 }

@@ -20,14 +20,14 @@ export async function AddConversation(from: string, message: string, response: s
 }
 export async function GetConversations(from: string): Promise<messagesFlowise[]> {
     const db = await connectToDB();
-    const querycmd = "SELECT message ,response FROM history WHERE fromnumber=$1 ORDER BY ID ASC LIMIT $2"
+    const querycmd = "SELECT message ,response FROM history WHERE fromnumber=$1 ORDER BY ID DESC LIMIT $2"
     let rows = await db.query(querycmd, [from, limitConversation]).then(result => result.rows) as messageApi[]
     await db.end()
     return (rows.length > 0 ? rows.map(
         (r: messageApi): messagesFlowise[] => [
             { type: "userMessage", message: r.message  },
             { type: "apiMessage", message: r.response  }
-        ]).flat() : []) as messagesFlowise[]
+        ]).flat() : []).reverse() as messagesFlowise[]
 }
 
 

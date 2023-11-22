@@ -96,10 +96,8 @@ export async function POST(req: NextRequest) {
     let response = await getResponse({
         "question": msg,
         "history": conversations.get(from)!,
-        "overrideConfig": {
-            "returnSourceDocuments": true
-        }
-    }, "WILLIAM")
+    
+    })
 
     //--------------------------------------
     //things that will keep this working
@@ -126,15 +124,11 @@ export async function POST(req: NextRequest) {
             )
     }
     // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
-   await getResponse({
+  console.log( await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
-
         "history": conversations.get(from)!,
-
-        "overrideConfig": {
-            "returnSourceDocuments": true
-        }
-    }, "TOOL")
+    }, "TOOL"))
+    /////////
     return res.json(
         { message: "everything is fine" }
         , { status: 200 })
