@@ -94,6 +94,9 @@ export async function POST(req: NextRequest) {
     let response = await getResponse({
         "question": msg,
         "history": conversations.get(from)!,
+        overrideConfig:{
+            returnSourceDocuments:true
+        }
     
     },"WILLIAM")
 
@@ -125,6 +128,9 @@ export async function POST(req: NextRequest) {
   ( await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
         "history": conversations.get(from)!,
+        overrideConfig:{
+            returnSourceDocuments:true
+        }
 
     }, "TOOL"))
     /////////
