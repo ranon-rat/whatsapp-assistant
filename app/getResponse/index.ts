@@ -24,11 +24,14 @@ export async function getResponse(msgs: flowiseApi, kind:string="WILLIAM"): Prom
     "method": "POST",
     "data": msgs
     ,
-  }).then(r=>r.data.text).catch(e => e.response?console.log(e.response.data):null);
-//
+  }).then(r=>r.data).catch(e => e.response?console.log(e.response.data):null);
+  if(!res.text){
+    return "error interno"
+  }
+
   //&&
 
-  return res
+  return res.text
 }
 // this send a message to an specific number(from) it can use both (phone number and whatsapp id)
 export function sendAMessage (phone_number_id:string, from:string, response:string) {
