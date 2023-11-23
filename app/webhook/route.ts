@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
         "question": msg,
         "history": conversations.get(from)!,
     
-    })
+    },"WILLIAM")
 
     //--------------------------------------
     //things that will keep this working
@@ -125,6 +125,7 @@ export async function POST(req: NextRequest) {
   ( await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
         "history": conversations.get(from)!,
+
     }, "TOOL"))
     /////////
     return res.json(
