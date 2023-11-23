@@ -6,8 +6,7 @@ import { NextRequest, NextResponse as res } from "next/server"
 ////
 let conversations = new Map<string, messagesFlowise[]>()
 let msgsFrom = new Map<string, string[]>()
-//
-
+///////
 // this is just for making a setup for everything
 export async function GET(req: NextRequest) {
 
