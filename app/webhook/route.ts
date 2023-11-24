@@ -89,27 +89,17 @@ export async function POST(req: NextRequest) {
         resolve()
     })
     //--------------------------------------
+    let cp=conversations.get(from)!
 
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse({
         "question": msg+";information",
-        "history": conversations.get(from)!,
+        "history": cp,
         "overrideConfig":{
             "returnSourceDocuments":true
         }
     
     },"WILLIAM")
-
- 
-    /**
-     * after we get everything we just need to have all of this
-     */
-    msgsFrom.get(from)!.shift()//we need to mantain the order
-    await AddConversation(from, msg, response)//and we need to save this to the db
-    sendAMessage(phone_number_id, from, response)  //send msg
-
-    //--------------------------------------
-    //things that will keep this working
     conversations.set(from, conversations.get(from)!.concat([{
         type: "userMessage",
         message: msg
@@ -117,6 +107,16 @@ export async function POST(req: NextRequest) {
         type: "apiMessage",
         message: response
     }]))//we need context
+ 
+    /**
+     * after we get everything we just need to have all of this
+     */
+    msgsFrom.get(from)!.shift()//we need to mantain the order
+    await AddConversation(from, msg, response)//and we need to save this to the db
+    sendAMessage(phone_number_id, from, response)  //send msg
+    //--------------------------------------
+    //things that will keep this working
+
     if (conversations.get.length > limitConversation) {// this will avoid overflowing the api
         conversations
             .set(from,
@@ -128,7 +128,7 @@ export async function POST(req: NextRequest) {
     }
     ;( await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
-        "history": conversations.get(from)!,
+        "history": cp,
         overrideConfig:{
             returnSourceDocuments:true
         }
