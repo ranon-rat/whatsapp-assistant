@@ -45,7 +45,7 @@ export async function AddOrUpdateArchive(archive: archiveProfile) {
         name = archive.name,
         company = archive.company,
         mbti = archive.mbti
-    if(!whatsappID){
+    if(["","unknown"].includes(whatsappID)){
         return
     }
     if (!await checkExistence(whatsappID)) {

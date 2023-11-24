@@ -99,6 +99,14 @@ export async function POST(req: NextRequest) {
         }
     
     },"WILLIAM")
+
+ 
+    /**
+     * after we get everything we just need to have all of this
+     */
+    msgsFrom.get(from)!.shift()//we need to mantain the order
+    await AddConversation(from, msg, response)//and we need to save this to the db
+    sendAMessage(phone_number_id, from, response)  //send msg
     ;( await getResponse({
         "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
         "history": conversations.get(from)!,
@@ -116,13 +124,6 @@ export async function POST(req: NextRequest) {
         type: "apiMessage",
         message: response
     }]))//we need context
- 
-    /**
-     * after we get everything we just need to have all of this
-     */
-    msgsFrom.get(from)!.shift()//we need to mantain the order
-    await AddConversation(from, msg, response)//and we need to save this to the db
-    sendAMessage(phone_number_id, from, response)  //send msg
     if (conversations.get.length > limitConversation) {// this will avoid overflowing the api
         conversations
             .set(from,
