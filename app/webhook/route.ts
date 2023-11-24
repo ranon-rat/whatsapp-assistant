@@ -92,21 +92,19 @@ export async function POST(req: NextRequest) {
 
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse({
-        "question": msg,
+        "question": "userPrompt: " + msg + ";information: " + (await getResponse({"question": ("WhatsappID: " + from + ";UserPrompt: " + msg),"history": conversations.get(from)!,
+            overrideConfig: {
+                returnSourceDocuments: true
+            }
+
+        }, "TOOL")),
         "history": conversations.get(from)!,
-        "overrideConfig":{
-            "returnSourceDocuments":true
-        }
-    
-    },"WILLIAM")
-    ;( await getResponse({
-        "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
-        "history": conversations.get(from)!,
-        overrideConfig:{
-            returnSourceDocuments:true
+        "overrideConfig": {
+            "returnSourceDocuments": true
         }
 
-    }, "TOOL"))
+    }, "WILLIAM")
+
     //--------------------------------------
     //things that will keep this working
     conversations.set(from, conversations.get(from)!.concat([{
@@ -116,7 +114,7 @@ export async function POST(req: NextRequest) {
         type: "apiMessage",
         message: response
     }]))//we need context
- 
+
     /**
      * after we get everything we just need to have all of this
      */
@@ -133,7 +131,7 @@ export async function POST(req: NextRequest) {
             )
     }
     // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
- 
+
     /////////
     return res.json(
         { message: "everything is fine" }
