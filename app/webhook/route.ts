@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse({
-        "question": msg,
+        "question":  ("WhatsappID: " + from + ";UserPrompt: " + msg),
         "history": cp,
         "overrideConfig":{
             "returnSourceDocuments":true
@@ -126,14 +126,7 @@ export async function POST(req: NextRequest) {
                     )
             )
     }
-    ;( await getResponse({
-        "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
-        "history": cp,
-        overrideConfig:{
-            returnSourceDocuments:true
-        }
 
-    }, "TOOL"))
     // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
  
     /////////

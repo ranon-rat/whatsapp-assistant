@@ -11,9 +11,7 @@ export async function getResponse(msgs: flowiseApi, kind:string="WILLIAM"): Prom
  And also you can do it to the chatflow with your fine tuned model.
 
 */
-if (kind == "TOOL") {
-    url = process.env.FLOWISE_TOOL
-  }
+
   // this just get the response from your flowise host
   let res = await axios({
     "url": url,
