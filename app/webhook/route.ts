@@ -107,14 +107,7 @@ export async function POST(req: NextRequest) {
     msgsFrom.get(from)!.shift()//we need to mantain the order
     await AddConversation(from, msg, response)//and we need to save this to the db
     sendAMessage(phone_number_id, from, response)  //send msg
-    ;( await getResponse({
-        "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
-        "history": conversations.get(from)!,
-        overrideConfig:{
-            returnSourceDocuments:true
-        }
 
-    }, "TOOL"))
     //--------------------------------------
     //things that will keep this working
     conversations.set(from, conversations.get(from)!.concat([{
@@ -133,6 +126,14 @@ export async function POST(req: NextRequest) {
                     )
             )
     }
+    ;( await getResponse({
+        "question": ("WhatsappID: " + from + ";UserPrompt: " + msg),
+        "history": conversations.get(from)!,
+        overrideConfig:{
+            returnSourceDocuments:true
+        }
+
+    }, "TOOL"))
     // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
  
     /////////
