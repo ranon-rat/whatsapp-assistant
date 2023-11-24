@@ -23,8 +23,11 @@ export async function getResponse(msgs: flowiseApi): Promise<string> {
     "data": msgs
     ,
   }).then(r=>r.data).catch(e => e.response?console.log(e.response.data):null);
-  if(!res?.text){
+  if (!res){
     return "error interno"
+  }
+  if(!res?.text){
+    return res
   }
 
   //&&
