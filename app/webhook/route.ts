@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
             "returnSourceDocuments":true
         }
     
-    },"WILLIAM")
+    })
     conversations.set(from, conversations.get(from)!.concat([{
         type: "userMessage",
         message: msg

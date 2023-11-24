@@ -3,7 +3,7 @@ import {flowiseApi} from "../types"
 
 
 
-export async function getResponse(msgs: flowiseApi, kind:string="WILLIAM"): Promise<string> {
+export async function getResponse(msgs: flowiseApi): Promise<string> {
   let url = process.env.FLOWISE_WILLIAM
 /*
  The reason this exists is just for making everything work.
