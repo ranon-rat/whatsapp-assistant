@@ -45,6 +45,9 @@ export async function AddOrUpdateArchive(archive: archiveProfile) {
         name = archive.name,
         company = archive.company,
         mbti = archive.mbti
+    if(!whatsappID){
+        return
+    }
     if (!await checkExistence(whatsappID)) {
         await db.query("INSERT INTO archives(whatsappID) VALUES($1)", [whatsappID])
     }
