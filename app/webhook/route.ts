@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse({
-        "question": msg+";information",
+        "question": msg,
         "history": cp,
         "overrideConfig":{
             "returnSourceDocuments":true
