@@ -30,6 +30,7 @@ export async function getResponse(prompt: string, conversations: messagesFlowise
       console.log(e.response.data))
     : null);
   if (!res) {
+    console.log("error")
     return "error interno"
   }
   if (!res?.text) {
