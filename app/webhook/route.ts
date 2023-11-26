@@ -102,9 +102,8 @@ export async function POST(req: NextRequest) {
 
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse((msg), cp,false)
-    AddConversation(from,msg,response)
+    AddConversationMAP(from,msg,response)
 
- 
     /**
      * after we get everything we just need to have all of this
      */
