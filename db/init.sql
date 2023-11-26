@@ -13,5 +13,9 @@ CREATE TABLE archives(
   WhatsappID TEXT UNIQUE,
   Name TEXT,
   Company TEXT,
-  MBTI TEXT
+  MBTI TEXT,
+  Problem TEXT,
+  Solution TEXT,
+  Thoughts,
+  Memories TEXT
 );
