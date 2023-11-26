@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'archives',
     description: 'archives',
 }
-
+//
 export default function RootLayout({
     children,
 }: {
