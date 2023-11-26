@@ -113,7 +113,6 @@ export async function POST(req: NextRequest) {
     sendAMessage(phone_number_id, from, response)  //send msg
     //--------------------------------------
     //things that will keep this working
-    await getResponse("WhatsappID: " + from + ";UserPrompt: " + msg,cp,true)
     if (conversations.get.length > limitConversation) {// this will avoid overflowing the api
         conversations
             .set(from,
@@ -123,6 +122,7 @@ export async function POST(req: NextRequest) {
                     )
             )
     }
+    await getResponse("WhatsappID: " + from + ";UserPrompt: " + msg,cp,true)
 
     // THIS IS FOR USING THE FUNCTION CALLING OF OPEN AI
  
