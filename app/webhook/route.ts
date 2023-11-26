@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
     let cp=conversations.get(from)!
 
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
-    let response = await getResponse((msg), cp,false)
+    let response = await getResponse("WhatsappID: " + from + ";UserPrompt: " + msg,cp)
     conversations.set(from, conversations.get(from)!.concat([{
         type: "userMessage",
         message: msg
@@ -109,7 +109,6 @@ export async function POST(req: NextRequest) {
     sendAMessage(phone_number_id, from, response)  //send msg
     //--------------------------------------
     //things that will keep this working
-    await getResponse("WhatsappID: " + from + ";UserPrompt: " + msg,cp,true)
     if (conversations.get.length > limitConversation) {// this will avoid overflowing the api
         conversations
             .set(from,

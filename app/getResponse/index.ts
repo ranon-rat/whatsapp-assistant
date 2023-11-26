@@ -3,11 +3,9 @@ import { flowiseApi, messagesFlowise } from "../types"
 
 
 
-export async function getResponse(prompt: string, conversations: messagesFlowise[], tool: boolean): Promise<string> {
+export async function getResponse(prompt: string, conversations: messagesFlowise[]): Promise<string> {
   let url = process.env.FLOWISE_WILLIAM
-  if (tool) {
-    url = process.env.FLOWISE_TOOL
-  }
+
   /*
    The reason this exists is just for making everything work.
    With this you can send a message to the chatflow with function calling
@@ -33,7 +31,7 @@ export async function getResponse(prompt: string, conversations: messagesFlowise
     ,
   }).then(r => r.data).catch(e => e.response ?
     (e.response.data.includes("tool") ?
-      { text: getResponse(prompt, conversations, tool) } :
+      { text: getResponse(prompt, conversations) } :
       console.log(e.response.data))
     : null);
   if (!res) {
