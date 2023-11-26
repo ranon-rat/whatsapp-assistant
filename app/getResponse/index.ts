@@ -6,13 +6,6 @@ import { flowiseApi, messagesFlowise } from "../types"
 export async function getResponse(prompt: string, conversations: messagesFlowise[]): Promise<string> {
   let url = process.env.FLOWISE_WILLIAM
 
-  /*
-   The reason this exists is just for making everything work.
-   With this you can send a message to the chatflow with function calling
-   And also you can do it to the chatflow with your fine tuned model.
-  
-  */
-//
   // this just get the response from your flowise host
   let res = await axios({
     "url": url,
