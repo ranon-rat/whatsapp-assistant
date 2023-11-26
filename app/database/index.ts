@@ -68,7 +68,7 @@ export async function AddOrUpdateArchive(archive: archiveProfile) {
           "anonymous",
           "anon",
           "anonimo",
-          "anonymous"].includes(v.value.toLowerCase())) {
+          "anonymous","N/A"].includes(v.value.toLowerCase())) {
             continue
         }
         await db.query(`UPDATE archives 

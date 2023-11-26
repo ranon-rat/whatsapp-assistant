@@ -8,6 +8,15 @@ let conversations = new Map<string, messagesFlowise[]>()
 let msgsFrom = new Map<string, string[]>()
 ///////
 // this is just for making a setup for everything
+function AddConversationMAP(from:string,msg:string,response:string){
+    conversations.set(from, conversations.get(from)!.concat([{
+        type: "userMessage",
+        message: msg
+    }, {
+        type: "apiMessage",
+        message: response
+    }]))
+}
 export async function GET(req: NextRequest) {
 
     // some params that you need to take into consideration
@@ -93,13 +102,8 @@ export async function POST(req: NextRequest) {
 
     // THIS IS FOR GETTING THE RESPONSE FROM WILLIAM
     let response = await getResponse((msg), cp,false)
-    conversations.set(from, conversations.get(from)!.concat([{
-        type: "userMessage",
-        message: msg
-    }, {
-        type: "apiMessage",
-        message: response
-    }]))//we need context
+    AddConversation(from,msg,response)
+
  
     /**
      * after we get everything we just need to have all of this
