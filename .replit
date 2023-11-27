@@ -1,0 +1,35 @@
+build = "npm run build"
+run = "npm run dev"
+entrypoint="app/page.jsx"
+
+hidden = [".config", "package-lock.json", ".next", ".swc"]
+
+[nix]
+channel = "stable-23_05"
+
+[deployment]
+build = ["npm", "run", "build"]
+run = ["npm", "run", "start"]
+deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix"]
+
+[packager]
+language = "nodejs"
+
+[packager.features]
+packageSearch = true
+guessImports = true
+
+[languages]
+
+[languages.typescript]
+pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
+
+[languages.typescript.languageServer]
+start = "typescript-language-server --stdio"
